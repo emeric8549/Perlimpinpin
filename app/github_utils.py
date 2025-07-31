@@ -1,6 +1,6 @@
 import tempfile, shutil, os, git, stat
 
-def handle_remove_readonly(func, path):
+def handle_remove_readonly(func, path, exc):
     """Handle the removal of read-only files."""
     os.chmod(path, stat.S_IWRITE)
     func(path)
