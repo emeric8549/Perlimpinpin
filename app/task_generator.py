@@ -35,6 +35,7 @@ For each task:
 - Describe **concretely what needs to be done**, avoiding vague or generic phrasing.
 - Provide a **time estimate in minutes**.
 
+Write each description in french.
 Respond only with a JSON list, without any additional text or explanations. The JSON should look like this:
 [
     {{
@@ -52,6 +53,5 @@ Respond only with a JSON list, without any additional text or explanations. The 
     )
 
     reply = response.text.strip()
-    print(f"Response from Gemini:\n{reply}\n")
 
     return extract_json_from_text(reply)
