@@ -8,7 +8,7 @@ def handle_remove_readonly(func, path, exc):
 def clone_and_extract_code(github_url: str) -> str:
     tmp_dir = tempfile.mkdtemp()
     try:
-        git.Repo.clone_from(github_url, tmp_dir, branch='main')
+        git.Repo.clone_from(github_url, tmp_dir) # add a particular branch with branch='main'
         code = ""
         for root, _, files in os.walk(tmp_dir):
             for file in files:
@@ -18,6 +18,6 @@ def clone_and_extract_code(github_url: str) -> str:
                             code += f.read() + "\n"
                     except Exception as e:
                         print(f"Error reading file {file}: {e}")
-        return code[:100000]
+        return code[:500000]
     finally:
         shutil.rmtree(tmp_dir, onerror=handle_remove_readonly)
