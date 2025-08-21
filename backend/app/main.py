@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.schemas import TaskRequest, TaskSuggestion
-from backend.github_utils import clone_and_extract_code
-from backend.task_generator import generate_tasks
+from app.schemas import TaskRequest, TaskSuggestion
+from app.github_utils import clone_and_extract_code
+from app.task_generator import generate_tasks
 
 app = FastAPI()
 
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # en dev uniquement !
+    allow_origins=["http://51.75.194.87"],  # en dev uniquement !
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
