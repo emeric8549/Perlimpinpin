@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: devcoach-backend
+    ports:
+      - "8000:8000"
+    networks:
+      - devcoach-network
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    build:
+      context: ./frontend/flutter_app
+      dockerfile: Dockerfile
+    container_name: devcoach-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - devcoach-network
+
+networks:
+  devcoach-network:
+    driver: bridge
