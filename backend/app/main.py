@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 @app.post("/generate-tasks", response_model=list[TaskSuggestion])
-def generate_tasks_endpoint(data: TaskRequest):
+async def generate_tasks_endpoint(data: TaskRequest):
     print(f"In the backend with those data: {data}")
     code = clone_and_extract_code(data.github_url)
     suggestions = generate_tasks(code, data.time_minutes)
