@@ -12,7 +12,7 @@ export async function fetchTasks(repoUrl: string, availableTime: number): Promis
       github_url: repoUrl,
       time_minutes: availableTime,
     }),)
-  const response = await fetch(`${API_BASE_URL}/generate_tasks`, {
+  const response = await fetch(`${API_BASE_URL}/generate-tasks`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
