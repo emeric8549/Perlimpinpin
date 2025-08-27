@@ -1,74 +1,103 @@
 import { useState } from "react";
-import { fetchTasks } from "./api";
-import type { TaskSuggestion } from "./api";
+
+interface TaskSuggestion {
+  title: string;
+  file: string;
+  description: string;
+  estimated_time: number;
+}
+
+const API_BASE_URL = "/api"; // via le proxy Nginx
 
 function App() {
   const [repoUrl, setRepoUrl] = useState("");
-  const [availableTime, setAvailableTime] = useState(30);
-  const [tasks, setTasks] = useState<TaskSuggestion[]>([]);
+  const [timeMinutes, setTimeMinutes] = useState<number | "">("");
+  const [suggestions, setSuggestions] = useState<TaskSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!repoUrl || !timeMinutes) {
+      setError("Please fill in both fields.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
+    setSuggestions([]);
 
     try {
-      const result = await fetchTasks(repoUrl, availableTime);
-      setTasks(result);
+      const response = await fetch(`${API_BASE_URL}/generate-tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          github_url: repoUrl,
+          time_minutes: timeMinutes,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const data: TaskSuggestion[] = await response.json();
+      setSuggestions(data);
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "An error occurred");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-      <h1 className="text-2xl font-bold mb-4">Task Coach</h1>
-      
-      <form onSubmit={handleSubmit} className="space-y-3 bg-white p-4 rounded-xl shadow w-full max-w-md">
-        <div>
-          <label className="block text-sm font-medium mb-1">Lien GitHub :</label>
+    <div style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}>
+      <h1>Dev Coach</h1>
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: 12 }}>
+          <label>GitHub Repository URL:</label>
           <input
             type="text"
             value={repoUrl}
             onChange={(e) => setRepoUrl(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder="https://github.com/user/repo"
+            style={{ width: "100%", padding: 8 }}
           />
         </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Temps disponible (minutes) :</label>
+        <div style={{ marginBottom: 12 }}>
+          <label>Time Available (minutes):</label>
           <input
             type="number"
-            value={availableTime}
-            onChange={(e) => setAvailableTime(Number(e.target.value))}
-            className="w-full p-2 border rounded"
+            value={timeMinutes}
+            onChange={(e) => setTimeMinutes(Number(e.target.value))}
+            style={{ width: "100%", padding: 8 }}
           />
         </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-          disabled={loading}
-        >
-          {loading ? "Chargement..." : "Générer des tâches"}
+        <button type="submit" style={{ padding: "8px 16px" }}>
+          Get Suggestions
         </button>
       </form>
 
-      {error && <p className="text-red-500 mt-3">{error}</p>}
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <ul className="mt-6 w-full max-w-md space-y-2">
-        {tasks.map((task) => (
-          <li key={task.id} className="p-3 bg-white rounded shadow">
-            <p className="font-semibold">{task.description}</p>
-            <p className="text-sm text-gray-600">⏱ {task.estimated_time}</p>
-          </li>
-        ))}
-      </ul>
+      {suggestions.length > 0 && (
+        <div style={{ marginTop: 20 }}>
+          <h2>Task Suggestions</h2>
+          <ul>
+            {suggestions.map((task, idx) => (
+              <li key={idx} style={{ marginBottom: 12 }}>
+                <strong>{task.title}</strong> ({task.estimated_time} min)
+                <br />
+                <em>{task.file}</em>
+                <p>{task.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
