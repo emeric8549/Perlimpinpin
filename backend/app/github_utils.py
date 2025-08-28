@@ -18,6 +18,8 @@ def clone_and_extract_code(github_url: str) -> str:
                             code += f.read() + "\n"
                     except Exception as e:
                         print(f"Error reading file {file}: {e}")
+        if len(code) > 500000:
+            print("The code has been truncated to the first 500,000 characters.")
         return code[:500000]
     finally:
         shutil.rmtree(tmp_dir, onerror=handle_remove_readonly)
