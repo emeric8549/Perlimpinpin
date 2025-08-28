@@ -12,6 +12,7 @@ const API_BASE_URL = "/api"; // via le proxy Nginx
 function App() {
   const [repoUrl, setRepoUrl] = useState("");
   const [timeMinutes, setTimeMinutes] = useState<number | "">("");
+  const [additionalContext, setAdditionalContext] = useState("");
   const [suggestions, setSuggestions] = useState<TaskSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +21,7 @@ function App() {
     e.preventDefault();
 
     if (!repoUrl || !timeMinutes) {
-      setError("Please fill in both fields.");
+      setError("Please fill in at least the repo URL and the time limit fields.");
       return;
     }
 
@@ -37,6 +38,7 @@ function App() {
         body: JSON.stringify({
           github_url: repoUrl,
           time_minutes: timeMinutes,
+          additional_context: additionalContext,
         }),
       });
 
@@ -55,7 +57,7 @@ function App() {
 
   return (
     <div style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}>
-      <h1>Dev Coach</h1>
+      <h1>Perlimpinpin</h1>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: 12 }}>
           <label>GitHub Repository URL:</label>
@@ -72,6 +74,15 @@ function App() {
             type="number"
             value={timeMinutes}
             onChange={(e) => setTimeMinutes(Number(e.target.value))}
+            style={{ width: "100%", padding: 8 }}
+          />
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          <label>Want to focus on a specific task?:</label>
+          <input
+            type="text"
+            value={additionalContext}
+            onChange={(e) => setAdditionalContext(e.target.value)}
             style={{ width: "100%", padding: 8 }}
           />
         </div>

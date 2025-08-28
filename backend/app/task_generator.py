@@ -21,13 +21,13 @@ def extract_json_from_text(text: str) -> list[dict]:
         return []
     
 
-def generate_tasks(github_context: str, time_limit: int) -> list[dict]:
+def generate_tasks(github_context: str, time_limit: int, additional_context: str) -> list[dict]:
     prompt = f"""
 You are an expert task generator. Your job is to create a list of tasks based on the provided GitHub context:
 {github_context}
 
 The user has {time_limit} minutes available today to work on this project.
-Suggest exactly 3 **independent**, **useful**, and **precise** tasks that can each be completed **individually** in less than {time_limit} minutes. The tasks must last at least {time_limit // 2} minutes each.
+Suggest exactly 3 **independent**, **useful**, and **precise** tasks that can each be completed **individually** in less than {time_limit} minutes. The tasks must last at least {time_limit // 2} minutes each. {additional_context}
 
 For each task:
 - Clearly indicate the **file involved** (relative path from the root of the repository), e.g., `"main.py"` or `"app.utils/cleaning.py"`.
