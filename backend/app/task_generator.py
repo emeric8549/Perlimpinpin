@@ -58,3 +58,31 @@ Respond only with a JSON list, without any additional text or explanations. The 
     reply = response.text.strip()
 
     return extract_json_from_text(reply)
+
+
+def generate_code(github_context: str, task: dict) -> str:
+    prompt = f"""
+You are an expert code generator. Your job is to create code based on the provided GitHub context:
+{github_context}
+
+The user has provided a task with the following details:
+- Title: {task["title"]}
+- File: {task["file"]}
+- Description: {task["description"]}
+- Estimated Time: {task["estimated_time"]} minutes
+
+Generate the code that fulfills this task.
+Respond only with a JSON, without any additional text or explanations. The JSON should look like this:
+{{
+    "code": "Respond only with the generated code, without any additional text or explanations.",
+    "language": "the programming language of the file (e.g., python, javascript, markdown, etc.) in lowercase"
+}}
+"""
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+    )
+
+    reply = response.text.strip()
+    print(extract_json_from_text(reply))
+    return extract_json_from_text(reply)
