@@ -2,6 +2,8 @@ FROM node:20 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
+RUN npm install react-syntax-highlighter prism-react-renderer
+RUN npm install --save-dev @types/react-syntax-highlighter
 COPY . .
 RUN npm run build
 

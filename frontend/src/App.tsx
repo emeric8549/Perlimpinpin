@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CodeSnippet from "./CodeSnippet";
 
 interface TaskSuggestion {
   id: number;
@@ -17,6 +18,9 @@ function App() {
   const [suggestions, setSuggestions] = useState<TaskSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [generatedCode, setGeneratedCode] = useState<string | null>(null);
+  const [language, setLanguage] = useState<string>("python");
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +33,7 @@ function App() {
     setLoading(true);
     setError(null);
     setSuggestions([]);
+    setGeneratedCode(null);
 
     try {
       const response = await fetch(`${API_BASE_URL}/generate-tasks`, {
@@ -56,6 +61,35 @@ function App() {
     }
   };
 
+  const handleChooseTask = async (taskId: number) => {
+    setLoading(true);
+    setError(null);
+    setGeneratedCode(null);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/generate-code`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ task_id: taskId }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setGeneratedCode(data.code || "No code generated");
+      setLanguage(data.language || "python");
+    } catch (err: any) {
+      setError(err.message || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <div style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}>
       <h1>Perlimpinpin</h1>
@@ -79,7 +113,7 @@ function App() {
           />
         </div>
         <div style={{ marginBottom: 12 }}>
-          <label>Want to focus on a specific task?:</label>
+          <label>Want to focus on a specific task?</label>
           <input
             type="text"
             value={additionalContext}
@@ -105,9 +139,22 @@ function App() {
                 <br />
                 <em>{task.file}</em>
                 <p>{task.description}</p>
+                <button
+                  onClick={() => handleChooseTask(task.id)}
+                  style={{ padding: "6px 12px", marginTop: 8 }}
+                >
+                  Choose this task
+                </button>
               </li>
             ))}
           </ol>
+        </div>
+      )}
+
+      {generatedCode && (
+        <div style={{ marginTop: 20 }}>
+          <h2>Generated Code</h2>
+          <CodeSnippet code={generatedCode} language={language as any} />
         </div>
       )}
     </div>
