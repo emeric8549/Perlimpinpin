@@ -41,6 +41,7 @@ Write each description in french.
 Respond only with a JSON list, without any additional text or explanations. The JSON should look like this:
 [
     {{
+    "id": id of the tasks (integer)
     "title": "Concise title of the task",
     "file": "relative/path/to/file.py",
     "description": "Exactly what needs to be done",

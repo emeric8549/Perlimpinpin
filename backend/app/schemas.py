@@ -6,7 +6,11 @@ class TaskRequest(BaseModel):
     additional_context: str | None = None
 
 class TaskSuggestion(BaseModel):
+    id: int
     title: str
     file: str
     description: str
     estimated_time: int # in minutes
+
+class TaskChoice(BaseModel):
+    task_id: int

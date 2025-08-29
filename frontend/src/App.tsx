@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 interface TaskSuggestion {
+  id: number;
   title: string;
   file: string;
   description: string;
@@ -97,16 +98,16 @@ function App() {
       {suggestions.length > 0 && (
         <div style={{ marginTop: 20 }}>
           <h2>Task Suggestions</h2>
-          <ul>
+          <ol>
             {suggestions.map((task, idx) => (
-              <li key={idx} style={{ marginBottom: 12 }}>
+              <li value={task.id} key={idx} style={{ marginBottom: 12 }}>
                 <strong>{task.title}</strong> ({task.estimated_time} min)
                 <br />
                 <em>{task.file}</em>
                 <p>{task.description}</p>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       )}
     </div>
