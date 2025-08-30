@@ -10,7 +10,7 @@ interface TaskSuggestion {
   estimated_time: number;
 }
 
-const API_BASE_URL = "/api"; // via le proxy Nginx
+const API_BASE_URL = "/api";
 
 function App() {
   const [repoUrl, setRepoUrl] = useState("");
@@ -104,8 +104,8 @@ function App() {
         style={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center", // centre horizontalement tous les enfants
-          gap: "12px",          // espace entre les champs
+          alignItems: "center",
+          gap: "12px",
         }}
       >
         <div style={{ marginBottom: 12, width: "300px", display: "flex", flexDirection: "column" , alignItems: "center" }}>
