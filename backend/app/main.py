@@ -39,5 +39,5 @@ async def generate_code_endpoint(choice: TaskChoice):
         return {"error": "Task not found"}
     
     generated_code = generate_code(last_code, chosen_task)
-    print(f"Generated code: {generated_code}")
-    return {"code": generated_code.code, "language": generated_code.language, "task": chosen_task}
+
+    return generated_code

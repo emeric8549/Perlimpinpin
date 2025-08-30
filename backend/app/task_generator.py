@@ -30,9 +30,10 @@ The user has {time_limit} minutes available today to work on this project.
 Suggest exactly 3 **independent**, **useful**, and **precise** tasks that can each be completed **individually** in less than {time_limit} minutes. The tasks must last at least {time_limit // 2} minutes each. {additional_context}
 
 For each task:
-- Clearly indicate the **file involved** (relative path from the root of the repository), e.g., `"main.py"` or `"app.utils/cleaning.py"`.
+- Clearly indicate the **file involved** (relative path from the root of the repository), e.g., `"main.py"` or `"app.utils/cleaning.py"`. You can only propose **one file** per task.
 - If the task involves creating a new file, specify **exactly where to create it**, including the file name.
 - Describe **concretely what needs to be done**, avoiding vague or generic phrasing.
+- If the task requires programming, only one programming language should be used per task.
 - Provide a **time estimate in minutes**.
 
 Do not make any suggestions about requirements.txt or package.json files, as they are not relevant to the task generation.
@@ -49,7 +50,6 @@ Respond only with a JSON list, without any additional text or explanations. The 
     }},
 ]
 """
-    # print(f"Prompt for Gemini:\n{prompt}\n")
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt,
@@ -71,7 +71,7 @@ The user has provided a task with the following details:
 - Description: {task["description"]}
 - Estimated Time: {task["estimated_time"]} minutes
 
-Generate the code that fulfills this task.
+Generate the code that fulfills this task. If the task implies the creation of more than one file, provide the code for each file in **the same** response.
 Respond only with a JSON, without any additional text or explanations. The JSON should look like this:
 {{
     "code": "Respond only with the generated code, without any additional text or explanations.",
@@ -84,5 +84,5 @@ Respond only with a JSON, without any additional text or explanations. The JSON 
     )
 
     reply = response.text.strip()
-    print(extract_json_from_text(reply))
-    return extract_json_from_text(reply)
+
+    return json.loads(reply[7:-3])
