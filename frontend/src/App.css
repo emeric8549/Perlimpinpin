@@ -1,13 +1,32 @@
-#root {
-  width: 100%;
+body, html, #root {
+  margin: 0;
+  padding: 0;
   height: 100%;
-  margin: 0 ;
-  padding: 2rem;
+  width: 100%;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  background: linear-gradient(to right, #23074d, #cc5333);
+}
+.app-header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 0px;
+  padding-right: 5%;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 150px;
   will-change: filter;
   transition: filter 300ms;
 }

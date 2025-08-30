@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CodeSnippet from "./CodeSnippet";
+import "./App.css";
 
 interface TaskSuggestion {
   id: number;
@@ -91,11 +92,24 @@ function App() {
 
 
   return (
-    <div className="w-screen h-screen flex flex-col">
-      <h1>Perlimpinpin</h1>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 12, width: "300px"}}>
-          <label style={{ display: "block", marginBottom: 4 }}>
+    <div className="app-container">
+      <div className="app-header">
+        <a href="https://github.com/emeric8549" target="_blank" rel="noopener noreferrer">
+          <img src="/perlimpinpin.png" alt="Logo" className="logo" />
+        </a>
+      </div>
+      <h1>✨ Perlimpinpin ✨</h1>
+      <form 
+      onSubmit={handleSubmit} 
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center", // centre horizontalement tous les enfants
+          gap: "12px",          // espace entre les champs
+        }}
+      >
+        <div style={{ marginBottom: 12, width: "300px", display: "flex", flexDirection: "column" , alignItems: "center" }}>
+          <label style={{ marginBottom: 4 }}>
             GitHub Repository URL:
             </label>
           <input
@@ -105,8 +119,8 @@ function App() {
             style={{ width: "100%", padding: 8 }}
           />
         </div>
-        <div style={{ marginBottom: 12, width: "200px" }}>
-          <label style={{ display: "block", marginBottom: 4 }}>
+        <div style={{ marginBottom: 12, width: "200px", display: "flex", flexDirection: "column" , alignItems: "center" }}>
+          <label style={{ marginBottom: 4 }}>
             Time Available (minutes):
             </label>
           <input
@@ -116,8 +130,8 @@ function App() {
             style={{ width: "100%", padding: 8 }}
           />
         </div>
-        <div style={{ marginBottom: 12, width: "600px" }}>
-          <label style={{ display: "block", marginBottom: 4 }}>
+        <div style={{ marginBottom: 12, width: "600px", display: "flex", flexDirection: "column" , alignItems: "center" }}>
+          <label style={{ marginBottom: 4 }}>
             Want to focus on a specific task?
             </label>
           <input
