@@ -91,11 +91,13 @@ function App() {
 
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: 20 }}>
+    <div className="w-screen h-screen flex flex-col">
       <h1>Perlimpinpin</h1>
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 12 }}>
-          <label>GitHub Repository URL:</label>
+        <div style={{ marginBottom: 12, width: "300px"}}>
+          <label style={{ display: "block", marginBottom: 4 }}>
+            GitHub Repository URL:
+            </label>
           <input
             type="text"
             value={repoUrl}
@@ -103,8 +105,10 @@ function App() {
             style={{ width: "100%", padding: 8 }}
           />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Time Available (minutes):</label>
+        <div style={{ marginBottom: 12, width: "200px" }}>
+          <label style={{ display: "block", marginBottom: 4 }}>
+            Time Available (minutes):
+            </label>
           <input
             type="number"
             value={timeMinutes}
@@ -112,8 +116,10 @@ function App() {
             style={{ width: "100%", padding: 8 }}
           />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Want to focus on a specific task?</label>
+        <div style={{ marginBottom: 12, width: "600px" }}>
+          <label style={{ display: "block", marginBottom: 4 }}>
+            Want to focus on a specific task?
+            </label>
           <input
             type="text"
             value={additionalContext}
