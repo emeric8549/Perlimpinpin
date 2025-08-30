@@ -37,7 +37,7 @@ For each task:
 - Provide a **time estimate in minutes**.
 
 Do not make any suggestions about requirements.txt or package.json files, as they are not relevant to the task generation.
-Write **at most** one task about README.md.
+Write **at most** one task about README.md unless it is demanded by the user in the additional_context.
 Write each description in french.
 Respond only with a JSON list, without any additional text or explanations. The JSON should look like this:
 [
