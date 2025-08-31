@@ -154,16 +154,16 @@ function App() {
           <h2>Task Suggestions</h2>
           <ol>
             {suggestions.map((task, idx) => (
-              <li value={task.id} key={idx} style={{ marginBottom: 12 }}>
+              <li value={task.id} key={idx} style={{ marginBottom: 15 }}>
                 <strong>{task.title}</strong> ({task.estimated_time} min)
                 <br />
                 <em>{task.file}</em>
                 <p>{task.description}</p>
                 <button
                   onClick={() => handleChooseTask(task.id)}
-                  style={{ padding: "6px 12px", marginTop: 8 }}
+                  style={{ padding: "6px 6px", marginTop: 5 }}
                 >
-                  Choose this task
+                  Need a hand?
                 </button>
               </li>
             ))}
