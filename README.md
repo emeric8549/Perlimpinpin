@@ -37,7 +37,8 @@ docker-compose up --build
 ```
 
 This project is containerized using docker. In order to run it, you have to install [docker engine](https://docs.docker.com/engine/install/).  
-Do not forget add your `GEMINI_API_KEY` beforehand. Your can get one on [Google AI studio](https://aistudio.google.com/app/apikey).  
+Do not forget to add your `GEMINI_API_KEY` beforehand. You can get a free one on [Google AI studio](https://aistudio.google.com/app/apikey).  
 
-Once the server is up, you can access it locally via your [browser on http://localhost:80](http://localhost:80)
-You can delete all containers and images with `sudo docker system prune`.
+Once the server is up, you can access it locally via [your browser on http://localhost:80](http://localhost:80).  
+
+When you're done, you can delete all containers and images with `sudo docker system prune`. Be careful if you have other containers that are running, you should rather delete it manually.
