@@ -98,18 +98,18 @@ function App() {
           <img src="/perlimpinpin.png" alt="Logo" className="logo" />
         </a>
       </div>
-      <h1>✨ Perlimpinpin ✨</h1>
+      <h1 style={{ color: "white" }}>✨ Perlimpinpin ✨</h1>
       <form 
       onSubmit={handleSubmit} 
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "12px",
+          gap: "12px"
         }}
       >
         <div style={{ marginBottom: 12, width: "300px", display: "flex", flexDirection: "column" , alignItems: "center" }}>
-          <label style={{ marginBottom: 4 }}>
+          <label style={{ marginBottom: 4, color: "white"}}>
             GitHub Repository URL:
             </label>
           <input
@@ -120,7 +120,7 @@ function App() {
           />
         </div>
         <div style={{ marginBottom: 12, width: "200px", display: "flex", flexDirection: "column" , alignItems: "center" }}>
-          <label style={{ marginBottom: 4 }}>
+          <label style={{ marginBottom: 4, color: "white" }}>
             Time Available (minutes):
             </label>
           <input
@@ -131,7 +131,7 @@ function App() {
           />
         </div>
         <div style={{ marginBottom: 12, width: "600px", display: "flex", flexDirection: "column" , alignItems: "center" }}>
-          <label style={{ marginBottom: 4 }}>
+          <label style={{ marginBottom: 4, color: "white" }}>
             Want to focus on a specific task?
             </label>
           <input
@@ -146,15 +146,15 @@ function App() {
         </button>
       </form>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p style={{ color: "white" }}>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {suggestions.length > 0 && (
         <div style={{ marginTop: 20 }}>
-          <h2>Task Suggestions</h2>
+          <h2 style={{ color: "white" }}>Task Suggestions</h2>
           <ol>
             {suggestions.map((task, idx) => (
-              <li value={task.id} key={idx} style={{ marginBottom: 15 }}>
+              <li value={task.id} key={idx} style={{ marginBottom: 15, color: "white" }}>
                 <strong>{task.title}</strong> ({task.estimated_time} min)
                 <br />
                 <em>{task.file}</em>
@@ -172,8 +172,8 @@ function App() {
       )}
 
       {generatedCode && (
-        <div style={{ marginTop: 20 }}>
-          <h2>Generated Code</h2>
+        <div style={{ marginTop: 20, marginLeft: 20, marginRight:20, overflowX: "auto" }}>
+          <h2 style={{ color: "white" }}>Generated Code</h2>
           <CodeSnippet code={generatedCode} language={language as any} />
         </div>
       )}

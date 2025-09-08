@@ -37,3 +37,32 @@ body, html, #root {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+button {
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333; /* gris foncé au survol */
+}
+
+input {
+  background-color: black;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 6px;
+}
+
+input::placeholder {
+  color: #aaa; /* couleur du texte placeholder */
+}
+
+pre {
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto; /* scrollbar horizontale si nécessaire */
+  white-space: pre; /* garde la mise en forme originale */
+  max-width: 100%; /* empêche de dépasser */
+}
